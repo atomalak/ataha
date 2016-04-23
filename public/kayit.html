@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="utf8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Öğrenci Kayit Bölümü</title>
+	  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script src="/js/ui-bootstrap-tpls-1.3.2.min.js"></script>
+    <script src="services/service.js"></script>
+    <script type="text/javascript">
+     var app=angular.module("app",["app.service","ui.bootstrap"]);
+
+     app.controller("baseCtrl",function($scope,kaydet,$uibModal,$rootScope,$filter){
+     $rootScope.search;
+
+      $rootScope.searchStudent=function(){
+        if(angular.element(document.getElementById("search")).val()==""){
+          $scope.students= kaydet.getStudent();
+
+        }else{
+          $scope.students=$filter("filter")($scope.students,angular.element(document.getElementById("search")).val());
+        }
+        
+        }
+
+       $rootScope.$on("updateRecord",function(event,data){
+         $scope.students[data.index].isim=data.isim;
+         $scope.students[data.index].ogrno=data.ogrno;
+         $scope.students[data.index].sinif=data.sinif;
+         alert("Kaydiniz başarılı bir şekilde güncellendi");
+       })
+
+
+      kaydet.getAllStudents().success(function(response){
+        $scope.students=response;
+        kaydet.setStudent($scope.students);
+       }).error(function(error){
+           
+       })
+
+       $scope.saveStudent=function(){
+          kaydet.saveStudents($scope.isim,$scope.ogrno,$scope.sinif).success(function(response){
+          	$scope.students.push({"isim":$scope.isim,"ogrno": $scope.ogrno,"sinif":$scope.sinif})
+            //clear fields
+            $scope.isim="";
+            $scope.ogrno="";
+            $scope.sinif="";
+            alert("Başarılı bir şekilde kayit yapildi");
+           }).error(function(err){
+             alert("Kayit yapilirken hata oluştu");
+          });
+        }
+
+        $scope.ogrSil=function(student,index){
+           kaydet.deleteStudent(student.ogrno).success(function(response){
+                $scope.students.splice(index,1);
+                alert("Öğrenci Silindi");
+
+           }).error(function(err){
+                alert("Öğrenci Silinemedi");
+           });
+
+        }
+
+        $scope.ogrGuncelle=function(student,index){
+            $scope.values=[student.isim,student.ogrno,student.sinif,index];
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'update.html',
+                controller: 'updateCtrl',
+                size: "lg",
+                resolve: {
+                  items: function () {
+                    return $scope.values;
+                  }
+                }
+              });
+        }
+
+     });
+
+   app.controller('updateCtrl', function ($scope, $uibModalInstance, items,kaydet,$rootScope) {
+        
+        $scope.isResult=false;
+        $scope.values = items;
+        $scope.isim=$scope.values[0];
+        $scope.ogrno=$scope.values[1];
+        $scope.sinif=$scope.values[2];
+        var index=$scope.values[3];
+
+        $scope.update = function () {
+          
+          kaydet.updateStudent($scope.isim,$scope.ogrno,$scope.sinif).success(function(response){
+               $uibModalInstance.dismiss('cancel');
+               var data={"isim":$scope.isim,"ogrno":$scope.ogrno,"sinif":$scope.sinif,"index":index}
+               $rootScope.$emit("updateRecord",data);
+          }).error(function(response){
+               alert("Kaydiniz Güncellenemedi");
+          });
+
+
+        };
+
+        $scope.cancel = function () {
+          $uibModalInstance.dismiss('cancel');
+        };
+});
+   
+
+    </script>
+   
+</head>
+<body ng-controller="baseCtrl"   > 
+ <ng-include src="'menu.html'"></ng-include>
+  <div class="container" style="position:relative;margin:auto">
+  
+  <div class="row">
+   <form name="ogrenci" role="form" novalidate  >
+      <div class="row">
+      <h3  class="alert alert-warning col-sm-3">Öğrenci Kayit Formu</h3>
+      </div>
+     <div class="row">
+     <div class="form-group col-sm-2">
+      <label for="isim"> Öğrenci Ismi</label>
+      <input type="text" class="form-control" name="isim" ng-model="isim" required/>
+     </div>
+     </div>
+     <div class="row"> 
+       <div class="form-group col-sm-2">
+        <label for="isim"> Öğrenci Numarası</label>
+        <input type="text" class="form-control" name="isim" ng-model="ogrno" required/>
+       </div>
+     </div>
+     <div class="row"> 
+     <div class="form-group col-sm-2">
+      <label for="isim"> Sınıfı</label>
+      <input type="text" class="form-control" name="isim" ng-model="sinif" required/>
+     </div>
+    </div>
+     <input type="button" value="kaydet" class="btn btn-primary" ng-disabled="ogrenci.$invalid" ng-click="saveStudent()"/>
+    </form>
+  </div>
+  <div class="row">
+  <table class="table">
+   <thead>
+     <tr>
+       <th>Öğrenci Ismi</th>
+       <th>Öğrenci Numarası</th>
+       <th>Sınıf</th>
+       <th>Sil</th>
+       <th>Güncelle</th>
+     </tr>
+
+   </thead>
+   <tbody>
+     <tr ng-repeat="student in students">
+       <td>{{student.isim}}</td>
+       <td>{{student.ogrno}}</td>
+       <td>{{student.sinif}}</td>
+       <td><a href="javascript:void(0)" class="btn btn-primary" ng-click="ogrSil(student,$index)">Sil</a></td>
+       <td><a href="javascript:void(0)" class="btn btn-primary" ng-click="ogrGuncelle(student,$index)">Güncelle</a></td>
+
+     </tr>
+
+   </tbody>
+    
+
+  </table>
+  </div>
+   </div>
+   </div>
+   <script type="text/ng-template" id="update.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Seçilen Öğrenci</h3>
+        </div>
+        <div class="modal-body">
+            <form>
+             <div class="row" ng-show="isResult">
+                <div ng-class="">
+                     
+                     <h3>{{stateRecord}}</h3>
+
+                      
+                </div>
+             </div>
+              <div class="row">
+                  <div class="col-sm-3">
+                    <label for="isim">İsim</label>
+                    <input type="text" ng-model="isim" class="form-control" id="isim"/>
+                  </div>
+               </div>
+
+               <div class="row">
+                  <div class="col-sm-3">
+                    <label for="no">Öğrenci Numarası</label>
+                    <input type="text" ng-model="ogrno" class="form-control" id="no" ng-disabled="true"/>
+                  </div>
+               </div>
+
+               <div class="row">
+                  <div class="col-sm-3">
+                    <label for="sinif">Sınıf</label>
+                    <input type="text" ng-model="sinif" class="form-control" id="sinif"/>
+                  </div>
+               </div>
+
+            </form>
+          </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="update()">Güncelle</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Iptal</button>
+        </div>
+    </script>
+</body>
+</html>
