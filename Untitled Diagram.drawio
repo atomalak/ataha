@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-09-27T18:08:54.161Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36" etag="hlTUiwT1AQ0I1joaLoyJ" version="15.3.5" type="github">
+<mxfile host="app.diagrams.net" modified="2021-09-27T18:14:55.653Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36" etag="efP9RIcJNA-HH9BnwLoa" version="15.3.5" type="github">
   <diagram id="dRzpOVpFm9Ay4RM9uaLY" name="Page-1">
     <mxGraphModel dx="1038" dy="579" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -34,6 +34,9 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="UpMxLX8vO4ziHgFZbLhg-40" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.855;entryY=0;entryDx=0;entryDy=4.35;entryPerimeter=0;endArrow=open;startSize=14;endSize=14;sourcePerimeterSpacing=8;targetPerimeterSpacing=8;" edge="1" parent="1" source="UpMxLX8vO4ziHgFZbLhg-4" target="UpMxLX8vO4ziHgFZbLhg-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UpMxLX8vO4ziHgFZbLhg-46" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=0.855;entryY=0;entryDx=0;entryDy=4.35;entryPerimeter=0;endArrow=open;startSize=14;endSize=14;sourcePerimeterSpacing=8;targetPerimeterSpacing=8;" edge="1" parent="1" source="UpMxLX8vO4ziHgFZbLhg-4" target="UpMxLX8vO4ziHgFZbLhg-44">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="UpMxLX8vO4ziHgFZbLhg-4" value="CRM API" style="rounded=0;whiteSpace=wrap;html=1;hachureGap=4;pointerEvents=0;" vertex="1" parent="1">
@@ -99,8 +102,17 @@
         <mxCell id="UpMxLX8vO4ziHgFZbLhg-32" value="TRACKING" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="485" y="490" width="80" height="20" as="geometry" />
         </mxCell>
+        <mxCell id="UpMxLX8vO4ziHgFZbLhg-47" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;endArrow=open;startSize=14;endSize=14;sourcePerimeterSpacing=8;targetPerimeterSpacing=8;" edge="1" parent="1" source="UpMxLX8vO4ziHgFZbLhg-41" target="UpMxLX8vO4ziHgFZbLhg-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="UpMxLX8vO4ziHgFZbLhg-41" value="BACKEND SYSTEM&lt;br&gt;" style="rounded=0;whiteSpace=wrap;html=1;hachureGap=4;pointerEvents=0;" vertex="1" parent="1">
-          <mxGeometry x="520" y="30" width="120" height="60" as="geometry" />
+          <mxGeometry x="480" y="20" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="UpMxLX8vO4ziHgFZbLhg-44" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;hachureGap=4;pointerEvents=0;" vertex="1" parent="1">
+          <mxGeometry x="200" y="400" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="UpMxLX8vO4ziHgFZbLhg-45" value="Caching(Redis)" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="170" y="490" width="100" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
